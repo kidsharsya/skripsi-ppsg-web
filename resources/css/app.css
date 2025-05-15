@@ -1,0 +1,14 @@
+.fi-page-header-widgets {
+    --cols-lg: repeat(
+        1,
+        minmax(0, 1fr)
+    ) !important; /* Override untuk kolom besar */
+    --cols-default: repeat(
+        1,
+        minmax(0, 1fr)
+    ); /* Override untuk kolom default */
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
