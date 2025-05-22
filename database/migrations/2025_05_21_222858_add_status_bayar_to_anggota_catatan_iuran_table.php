@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('pembayaran_kas', function (Blueprint $table) {
-            $table->dropForeign(['anggota_id']);
-            $table->dropColumn('anggota_id');
+        Schema::table('anggota_catatan_iuran', function (Blueprint $table) {
+            $table->boolean('status_bayar')->default(false)->after('catatan_iuran_id');
         });
     }
 
@@ -22,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('pembayaran_kas', function (Blueprint $table) {
-            $table->foreignId('anggota_id')->nullable()->constrained('anggotas')->onDelete('set null');
+        Schema::table('anggota_catatan_iuran', function (Blueprint $table) {
+            $table->dropColumn('status_bayar');
         });
     }
 };

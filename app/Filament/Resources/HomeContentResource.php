@@ -132,12 +132,12 @@ class HomeContentResource extends Resource
                 ->html()
                 ->wrap(),
 
-            Tables\Columns\TextColumn::make('section1')->label('Section 1'),
-            Tables\Columns\TextColumn::make('section2')->label('Section 2'),
-            Tables\Columns\TextColumn::make('section3')->label('Section 3'),
-            Tables\Columns\TextColumn::make('section4')->label('Section 4'),
-            Tables\Columns\TextColumn::make('section5')->label('Section 5'),
-            Tables\Columns\TextColumn::make('section6')->label('Section 6'),
+            Tables\Columns\TextColumn::make('section1')->label('Section 1')->toggleable(),
+            Tables\Columns\TextColumn::make('section2')->label('Section 2')->toggleable(),
+            Tables\Columns\TextColumn::make('section3')->label('Section 3')->toggleable(),
+            Tables\Columns\TextColumn::make('section4')->label('Section 4')->toggleable(),
+            Tables\Columns\TextColumn::make('section5')->label('Section 5')->toggleable(),
+            Tables\Columns\TextColumn::make('section6')->label('Section 6')->toggleable(),
                 
             
             Tables\Columns\TextColumn::make('updated_at')

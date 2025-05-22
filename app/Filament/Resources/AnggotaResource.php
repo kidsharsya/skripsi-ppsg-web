@@ -13,13 +13,13 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AnggotaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AnggotaResource\RelationManagers;
+use Illuminate\Support\Str;
 
 class AnggotaResource extends Resource
 {
     protected static ?string $model = Anggota::class;
 
-    protected static ?string $navigationLabel = 'Anggota';
-    protected static ?string $navigationGroup = 'Manajemen Anggota';
+    protected static ?string $navigationLabel = 'Manajemen Anggota';
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?int $navigationSort = 3;
 
@@ -103,41 +103,59 @@ class AnggotaResource extends Resource
                 Tables\Columns\TextColumn::make('nama')
                     ->label('Nama')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('tempat_tgl_lahir')
                     ->label('Tempat dan Tanggal Lahir')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('jenis_kelamin')
                     ->label('Jenis Kelamin')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('agama')
                     ->label('Agama')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('rt')
                     ->label('RT')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('gol_darah')
-                    ->label('Golongan Darah')
-                    ->sortable(),
+                    ->label('Gol Darah')
+                    ->sortable()
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('no_hp')
-                    ->label('Nomor HP'),
+                    ->label('No HP')
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('user.email')
-                    ->label('Email'),
+                    ->label('Email')
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('status_keanggotaan')
                     ->label('Status')
-                    ->sortable(),
+                    ->sortable()
+                    ->badge()
+                    ->toggleable()
+                    ->formatStateUsing(fn ($state) => Str::ucfirst($state))
+                    ->color(fn ($state) => match ($state) {
+                        'aktif' => 'success',       // hijau
+                        'pasif' => 'warning',       // kuning
+                        'tidak aktif' => 'danger',  // merah
+                        default => 'gray',
+                    }),
             ])
             ->filters([
                     Tables\Filters\SelectFilter::make('jenis_kelamin')
-                    ->label('Jenis Kelamin')
+                    ->label('Jenis 
+                    Kelamin')
                     ->options([
                         'Laki-laki' => 'Laki-laki',
                         'Perempuan' => 'Perempuan',

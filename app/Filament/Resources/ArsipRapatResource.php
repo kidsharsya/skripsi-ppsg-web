@@ -19,10 +19,9 @@ class ArsipRapatResource extends Resource
 {
     protected static ?string $model = ArsipRapat::class;
 
-    protected static ?string $navigationLabel = 'Arsip Rapat';
-    protected static ?string $navigationGroup = 'Manajemen Arsip';
+    protected static ?string $navigationLabel = 'Manajemen Arsip Rapat';
     protected static ?string $navigationIcon = 'heroicon-o-folder';
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form
     {

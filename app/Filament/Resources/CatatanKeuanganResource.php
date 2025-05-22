@@ -20,8 +20,7 @@ class CatatanKeuanganResource extends Resource
     protected static ?string $model = CatatanKeuangan::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
-    protected static ?string $navigationGroup = 'Manajemen Keuangan';
-    protected static ?string $navigationLabel = 'Catatan Keuangan';
+    protected static ?string $navigationLabel = 'Manajemen Keuangan';
     protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
@@ -38,11 +37,19 @@ class CatatanKeuanganResource extends Resource
 
                 Forms\Components\TextInput::make('masuk')
                     ->numeric()
-                    ->label('Uang Masuk'),
+                    ->label('Uang Masuk')
+                    ->formatStateUsing(fn ($state) => $state !== null ? (int) $state : null)
+                    ->reactive()
+                    ->afterStateUpdated(fn (callable $set) => $set('keluar', null))
+                    ->hidden(fn (callable $get) => $get('keluar') !== null && $get('keluar') > 0),
 
                 Forms\Components\TextInput::make('keluar')
                     ->numeric()
-                    ->label('Uang Keluar'),
+                    ->label('Uang Keluar')
+                    ->formatStateUsing(fn ($state) => $state !== null ? (int) $state : null)
+                    ->reactive()
+                    ->afterStateUpdated(fn (callable $set) => $set('masuk', null))
+                    ->hidden(fn (callable $get) => $get('masuk') !== null && $get('masuk') > 0),
 
                 Forms\Components\Select::make('user_id') 
                     ->label('Penginput')

@@ -9,6 +9,10 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\Action;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PresensisRelationManager extends RelationManager
 {
@@ -42,13 +46,31 @@ class PresensisRelationManager extends RelationManager
                     ->label('Nama Anggota')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->label('Status'),
+                    ->label('Status')
+                    ->formatStateUsing(fn ($state) => Str::ucfirst($state)),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                // Tables\Actions\CreateAction::make(),
+                Action::make('exportPdf')
+                    ->label('Export PDF')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->action(function () {
+                        $presensis = $this->getOwnerRecord()->presensis()->with('anggota')->get();
+
+                        $pdf = Pdf::loadView('presensi', [
+                        'acara' => $this->getOwnerRecord(),
+                        'presensis' => $presensis,
+            ]);
+
+            $filename = 'presensi_' . $this->getOwnerRecord()->nama . $this->getOwnerRecord()->waktu_mulai . '.pdf';
+
+            return response()->streamDownload(
+                fn () => print($pdf->stream()),
+                $filename
+            );
+        }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

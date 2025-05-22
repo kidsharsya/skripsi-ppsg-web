@@ -9,13 +9,16 @@ export default defineConfig({
         laravel({
             input: ["resources/css/app.css", "resources/js/app.jsx"],
             refresh: true,
-            // ssr: 'resources/js/ssr.jsx',
         }),
     ],
-    // Vite
-    resolve: (name) => {
-        const pages = import.meta.glob("./Pages/**/*.jsx", { eager: true });
-        return pages[`./Pages/${name}.jsx`];
+    server: {
+        host: true, // agar bisa diakses dari device lain
+        port: 5173, // default Vite port, sesuaikan jika kamu ubah
+        hmr: {
+            protocol: "wss",
+            host: "bba8-103-19-180-14.ngrok-free.app", // atau IP kamu, tergantung kondisi
+            clientPort: 443,
+        },
     },
     css: {
         postcss: {

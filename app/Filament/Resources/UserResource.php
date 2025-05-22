@@ -17,9 +17,8 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationLabel = 'User';
+    protected static ?string $navigationLabel = 'Manajemen User';
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?string $navigationGroup = 'Manajemen User';
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
@@ -66,10 +65,10 @@ class UserResource extends Resource
                     ->label('Role')
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Dibuat Pada')
-                    ->sortable()
-                    ->dateTime(),
+                // Tables\Columns\TextColumn::make('created_at')
+                //     ->label('Dibuat Pada')
+                //     ->sortable()
+                //     ->dateTime(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('role')

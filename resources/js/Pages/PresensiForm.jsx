@@ -35,6 +35,47 @@ function SetViewOnChange({ coords }) {
     return null;
 }
 
+// Toast notification for success and non-token errors only
+const Toast = ({ toast, onDismiss }) => {
+    if (!toast) return null;
+
+    const colors = {
+        success: "bg-green-50 border-green-200 text-green-700",
+        error: "bg-red-50 border-red-200 text-red-700",
+        warning: "bg-yellow-50 border-yellow-200 text-yellow-700",
+        info: "bg-blue-50 border-blue-200 text-blue-700",
+    };
+
+    return (
+        <AnimatePresence>
+            <motion.div
+                className="fixed top-4 left-0 right-0 flex justify-center z-[1000]"
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
+            >
+                <motion.div
+                    className={`${
+                        colors[toast.type]
+                    } border rounded-lg shadow-lg p-4 flex items-center max-w-md w-full mx-4`}
+                >
+                    <div className="mr-3">{toast.icon}</div>
+                    <div>
+                        <h3 className="font-semibold">{toast.title}</h3>
+                        <p className="text-sm mt-1">{toast.message}</p>
+                    </div>
+                    <button
+                        onClick={onDismiss}
+                        className="ml-auto text-gray-400 hover:text-gray-600"
+                    >
+                        <XCircle className="h-5 w-5" />
+                    </button>
+                </motion.div>
+            </motion.div>
+        </AnimatePresence>
+    );
+};
+
 export default function PresensiForm({ acara, error, success }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         token: "",
@@ -47,27 +88,28 @@ export default function PresensiForm({ acara, error, success }) {
 
     const [coords, setCoords] = useState({ latitude: "", longitude: "" });
     const [locationStatus, setLocationStatus] = useState("loading");
-    const [alertInfo, setAlertInfo] = useState(null);
-    const [showSuccessModal, setShowSuccessModal] = useState(false);
-    // State for tracking if map is ready
+    const [toast, setToast] = useState(null);
+    const [tokenError, setTokenError] = useState(null);
     const [mapReady, setMapReady] = useState(false);
 
-    const alertStyles = {
-        success: "bg-green-100 border-l-4 border-green-500 text-green-700",
-        error: "bg-red-100 border-l-4 border-red-500 text-red-700",
-        warning: "bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700",
-        info: "bg-blue-100 border-l-4 border-blue-500 text-blue-700",
-    };
+    const showToast = (type, title, message, icon, duration = 3000) => {
+        setToast({ type, title, message, icon });
 
-    const showAlert = (type, title, message, icon) => {
-        setAlertInfo({ type, title, message, icon });
-        if (type === "success") {
-            setTimeout(() => setAlertInfo(null), 3000);
+        if (duration) {
+            setTimeout(() => setToast(null), duration);
         }
     };
 
-    const dismissAlert = () => {
-        setAlertInfo(null);
+    const dismissToast = () => {
+        setToast(null);
+    };
+
+    const showTokenError = (title, message, icon) => {
+        setTokenError({ title, message, icon });
+    };
+
+    const dismissTokenError = () => {
+        setTokenError(null);
     };
 
     useEffect(() => {
@@ -84,23 +126,18 @@ export default function PresensiForm({ acara, error, success }) {
                     setLocationStatus("success");
                     setMapReady(true);
 
-                    if (!alertInfo || alertInfo.type !== "info") {
-                        showAlert(
-                            "info",
-                            "Lokasi Ditemukan",
-                            "Lokasi Anda berhasil terdeteksi.",
-                            <MapPin className="h-5 w-5" />
-                        );
-                    }
+                    // No longer show this toast
+                    // showToast("info", "Lokasi Ditemukan", ...)
                 },
                 (error) => {
                     console.error(error);
                     setLocationStatus("error");
-                    showAlert(
+                    showToast(
                         "error",
                         "Gagal Deteksi Lokasi",
                         "Pastikan GPS aktif dan izin lokasi diberikan.",
-                        <AlertCircle className="h-5 w-5" />
+                        <AlertCircle className="h-5 w-5 text-red-500" />,
+                        0
                     );
                 },
                 {
@@ -115,45 +152,50 @@ export default function PresensiForm({ acara, error, success }) {
             };
         } else {
             setLocationStatus("unsupported");
-            showAlert(
+            showToast(
                 "error",
                 "Browser Tidak Didukung",
                 "Browser Anda tidak mendukung fitur geolocation.",
-                <AlertCircle className="h-5 w-5" />
+                <AlertCircle className="h-5 w-5 text-red-500" />,
+                0
             );
         }
     }, []);
 
     useEffect(() => {
         if (error) {
-            showAlert(
+            showToast(
                 "error",
                 "Terjadi Kesalahan",
                 error,
-                <XCircle className="h-5 w-5" />
+                <XCircle className="h-5 w-5 text-red-500" />,
+                0
             );
         }
         if (success) {
-            showAlert(
+            showToast(
                 "success",
                 "Sukses",
                 success,
-                <CheckCircle className="h-5 w-5" />
+                <CheckCircle className="h-5 w-5 text-green-500" />,
+                3000
             );
         }
     }, [error, success]);
 
     const submit = (e) => {
-        console.log(data);
-
         e.preventDefault();
 
+        // Clear any existing token error
+        dismissTokenError();
+
         if (!coords.latitude || !coords.longitude) {
-            showAlert(
+            showToast(
                 "warning",
                 "Lokasi Belum Tersedia",
                 "Tunggu hingga lokasi Anda berhasil terdeteksi.",
-                <AlertTriangle className="h-5 w-5" />
+                <AlertTriangle className="h-5 w-5 text-yellow-500" />,
+                3000
             );
             return;
         }
@@ -161,49 +203,61 @@ export default function PresensiForm({ acara, error, success }) {
         post(route("presensi.store"), {
             preserveScroll: true,
             onSuccess: () => {
-                setShowSuccessModal(true);
+                showToast(
+                    "success",
+                    "Presensi Berhasil!",
+                    "Terima kasih sudah melakukan presensi.",
+                    <CheckCircle className="h-5 w-5 text-green-500" />,
+                    2000
+                );
                 reset();
                 setTimeout(() => {
-                    setShowSuccessModal(false);
                     router.visit("/presensi");
-                }, 2000); // Tampil modal selama 2 detik
+                }, 2000);
             },
             onError: (errors) => {
                 if (errors.message) {
                     let title = "Gagal Presensi";
-                    let icon = <XCircle className="h-5 w-5" />;
+                    let icon = <XCircle className="h-5 w-5 text-red-500" />;
 
                     if (errors.message.includes("Token tidak valid")) {
                         title = "Token Salah";
-                        icon = <AlertCircle className="h-5 w-5" />;
+                        icon = <AlertCircle className="h-5 w-5 text-red-500" />;
+                        // Show token error inline instead of toast
+                        showTokenError(title, errors.message, icon);
                     } else if (
                         errors.message.includes(
                             "Token sudah kedaluwarsa, presensi telah ditutup"
                         )
                     ) {
                         title = "Presensi Ditutup";
-                        icon = <Clock className="h-5 w-5" />;
+                        icon = <Clock className="h-5 w-5 text-red-500" />;
+                        // Show token error inline instead of toast
+                        showTokenError(title, errors.message, icon);
                     } else if (
                         errors.message.includes(
                             "Tidak dapat presensi! Kamu berada di luar area lokasi acara"
                         )
                     ) {
                         title = "Di Luar Area";
-                        icon = <MapPin className="h-5 w-5" />;
+                        icon = <MapPin className="h-5 w-5 text-red-500" />;
+                        showToast("error", title, errors.message, icon, 0);
                     } else if (
                         errors.message.includes("Kamu sudah melakukan presensi")
                     ) {
                         title = "Sudah Presensi";
-                        icon = <AlertCircle className="h-5 w-5" />;
+                        icon = <AlertCircle className="h-5 w-5 text-red-500" />;
+                        showToast("error", title, errors.message, icon, 0);
+                    } else {
+                        showToast("error", title, errors.message, icon, 0);
                     }
-
-                    showAlert("error", title, errors.message, icon);
                 } else {
-                    showAlert(
+                    showToast(
                         "error",
                         "Input Tidak Valid",
                         "Pastikan input terisi dengan benar!",
-                        <AlertCircle className="h-5 w-5" />
+                        <AlertCircle className="h-5 w-5 text-red-500" />,
+                        0
                     );
                 }
             },
@@ -212,61 +266,13 @@ export default function PresensiForm({ acara, error, success }) {
 
     return (
         <MainLayout>
-            {/* Modal Success sebagai Toast */}
-            <AnimatePresence>
-                {showSuccessModal && (
-                    <motion.div
-                        className="fixed top-4 left-0 right-0 flex justify-center z-[1000]"
-                        initial={{ opacity: 0, y: -50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -50 }}
-                    >
-                        <motion.div className="bg-green-50 border border-green-200 rounded-lg shadow-lg p-6 flex items-center max-w-md w-full mx-4">
-                            <CheckCircle className="h-8 w-8 text-green-500 mr-4" />
-                            <div>
-                                <h2 className="text-lg font-bold text-green-800">
-                                    Presensi Berhasil!
-                                </h2>
-                                <p className="text-green-700 text-base mt-1">
-                                    Terima kasih sudah melakukan presensi.
-                                </p>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {/* Toast for success and non-token errors only */}
+            <Toast toast={toast} onDismiss={dismissToast} />
 
             <div className="max-w-4xl mx-auto py-8 px-4">
                 <h1 className="text-2xl font-bold mb-6">
                     Presensi: {acara.nama}
                 </h1>
-
-                {/* Alert */}
-                {alertInfo && (
-                    <div
-                        className={`${
-                            alertStyles[alertInfo.type]
-                        } p-4 mb-6 rounded-md`}
-                    >
-                        <div className="flex items-start">
-                            <div className="mr-3">{alertInfo.icon}</div>
-                            <div>
-                                <h3 className="font-semibold">
-                                    {alertInfo.title}
-                                </h3>
-                                <p className="text-sm mt-1">
-                                    {alertInfo.message}
-                                </p>
-                            </div>
-                            <button
-                                onClick={dismissAlert}
-                                className="ml-auto text-gray-400 hover:text-gray-600"
-                            >
-                                <XCircle className="h-5 w-5" />
-                            </button>
-                        </div>
-                    </div>
-                )}
 
                 {/* Group 1: Lokasi dan Token */}
                 <div className="flex flex-col md:flex-row gap-6">
@@ -339,6 +345,29 @@ export default function PresensiForm({ acara, error, success }) {
                                     <p className="text-red-500 text-sm mt-1">
                                         {errors.token}
                                     </p>
+                                )}
+
+                                {/* Inline token error message */}
+                                {tokenError && (
+                                    <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-md flex items-start">
+                                        <div className="mr-2 mt-0.5">
+                                            {tokenError.icon}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-medium text-red-700">
+                                                {tokenError.title}
+                                            </h4>
+                                            <p className="text-sm text-red-600">
+                                                {tokenError.message}
+                                            </p>
+                                        </div>
+                                        <button
+                                            onClick={dismissTokenError}
+                                            className="ml-auto text-red-400 hover:text-red-600"
+                                        >
+                                            <XCircle className="h-4 w-4" />
+                                        </button>
+                                    </div>
                                 )}
                             </div>
 

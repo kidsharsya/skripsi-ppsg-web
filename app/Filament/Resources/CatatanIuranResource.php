@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Anggota;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\CatatanIuran;
@@ -13,15 +14,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CatatanIuranResource\Pages;
 use App\Filament\Resources\CatatanIuranResource\RelationManagers;
+use App\Filament\Resources\CatatanIuranResource\RelationManagers\AnggotaRelationManager;
 
 class CatatanIuranResource extends Resource
 {
     protected static ?string $model = CatatanIuran::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
-    protected static ?string $navigationGroup = 'Manajemen Keuangan';
     protected static ?int $navigationSort = 5;
-    protected static ?string $navigationLabel = 'Catatan Iuran/Kas';
+    protected static ?string $navigationLabel = 'Manajemen Iuran/Kas';
 
     public static function form(Form $form): Form
     {
@@ -33,7 +34,8 @@ class CatatanIuranResource extends Resource
                     ->disabled() // Nonaktifkan agar tidak bisa diubah secara manual
                     ->relationship('user', 'name'),
                 Forms\Components\DatePicker::make('tanggal_pertemuan')
-                ->required(),
+                ->required()
+                ->disabled(fn (Get $get, $state, $context) => $context === 'edit'),
                 // Select untuk memilih RT
                 Forms\Components\Select::make('rt')
                 ->label('Pilih RT')
@@ -45,27 +47,8 @@ class CatatanIuranResource extends Resource
                  // Mengosongkan pilihan anggota_id ketika RT berubah
                  $set('anggota_id', []);
                 })
-                ->required(),
-
-                // CheckboxList untuk memilih anggota berdasarkan RT yang dipilih
-                Forms\Components\CheckboxList::make('anggota_id')
-                ->label('Pilih Anggota')
-                ->relationship('anggota')
-                ->options(function (callable $get) {
-                 // Mengambil nilai RT yang dipilih
-                 $selectedRT = $get('rt');
-                 
-                 // Jika RT dipilih, ambil daftar anggota berdasarkan RT tersebut
-                 if ($selectedRT) {
-                     return Anggota::where('rt', $selectedRT)
-                         ->pluck('nama', 'id')
-                         ->toArray();
-                 }
-                 
-                 // Jika tidak ada RT yang dipilih, kembalikan array kosong
-                 return [];
-                })
-                ->columns(3),
+                ->required()
+                ->disabled(fn (Get $get, $state, $context) => $context === 'edit'),
             ]);
     }
 
@@ -80,9 +63,28 @@ class CatatanIuranResource extends Resource
                 Tables\Columns\TextColumn::make('rt')
                 ->label('RT')
                 ->sortable(),
-                Tables\Columns\TextColumn::make('anggota_count')
-                ->label('Jumlah Anggota Membayar')
-                ->counts('anggota'),
+                Tables\Columns\TextColumn::make('jumlah_anggota_rt')
+                ->label('Wajib Bayar')
+                ->getStateUsing(function ($record) {
+                    return \App\Models\Anggota::where('rt', $record->rt)
+                    ->whereIn('status_keanggotaan', ['aktif', 'pasif'])
+                    ->count();
+                }),
+                Tables\Columns\TextColumn::make('sudah_bayar')
+                ->label('Sudah Bayar')
+                ->getStateUsing(function ($record) {
+                    return $record->anggota()
+                        ->wherePivot('status_bayar', true)
+                        ->count();
+                    }),
+                Tables\Columns\TextColumn::make('belum_bayar')
+                ->label('Belum Bayar')
+                ->getStateUsing(function ($record) {
+                    return $record->anggota()
+                        ->wherePivot('status_bayar', false)
+                        ->count();
+                    }),
+
                 Tables\Columns\TextColumn::make('user.name')
                 ->label('Penginput')
                 ->searchable(),
@@ -103,6 +105,7 @@ class CatatanIuranResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -114,7 +117,7 @@ class CatatanIuranResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AnggotaRelationManager::class,
         ];
     }
 

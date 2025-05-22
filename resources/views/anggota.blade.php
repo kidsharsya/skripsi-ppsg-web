@@ -34,6 +34,7 @@
                 <th>Gol Darah</th>
                 <th>No HP</th>
                 <th>Email</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -47,6 +48,7 @@
                     <td>{{ $anggota->gol_darah }}</td>
                     <td>{{ $anggota->no_hp }}</td>
                     <td>{{ $anggota->user ? $anggota->user->email : 'Tidak Ada' }}</td>
+                     <td>{{ $anggota->status_keanggotaan }}</td>
                 </tr>
             @endforeach
         </tbody>

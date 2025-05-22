@@ -28,7 +28,12 @@ class IuranAnggotaController extends Controller
 
         // Siapkan data status bayar
         $riwayat = $catatanIurans->map(function ($item) use ($anggota) {
-            $sudahBayar = $item->anggota->contains($anggota->id);
+        $sudahBayar = $item->anggota
+            ->where('id', $anggota->id)
+            ->first()
+                ?->pivot
+                ?->status_bayar ?? false;
+
 
             return [
                 'id' => $item->id,

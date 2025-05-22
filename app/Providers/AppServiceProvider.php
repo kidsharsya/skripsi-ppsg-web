@@ -29,5 +29,9 @@ class AppServiceProvider extends ServiceProvider
                 ] : null;
             },
         ]);
+
+        if (app()->environment('local')) {
+        \Illuminate\Support\Facades\URL::forceScheme('https');
+    }
     }
 }

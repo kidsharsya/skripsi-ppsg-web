@@ -36,14 +36,11 @@ class CreateUangKeluar extends CreateRecord
                     ->required()
                     ->label('Uang Keluar'),
 
-                Forms\Components\Select::make('user_id')
-                    ->required()
-                    ->relationship('user', 'name')
+                Forms\Components\Select::make('user_id') 
                     ->label('Penginput')
-                    ->options(function () {
-                        return User::where('role', 'admin')
-                        ->pluck('name', 'id');
-                    }),
+                    ->default(auth()->user()->id) // Secara otomatis set ID user yang login
+                    ->disabled() // Nonaktifkan agar tidak bisa diubah secara manual
+                    ->relationship('user', 'name'),
             ]);
     }
 }

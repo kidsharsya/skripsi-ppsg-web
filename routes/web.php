@@ -11,6 +11,7 @@ use App\Http\Controllers\ArsipRapatController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Api\PresensiController;
 use App\Http\Controllers\IuranAnggotaController;
+use App\Http\Controllers\RekapPresensiController;
 use App\Http\Controllers\ArsipProgramKerjaController;
 
 /*
@@ -60,4 +61,6 @@ Route::middleware('auth')->group(function (){
 }); #Ini route middleware untuk halaman pengguna
 
 Route::get('/export-pdf', [AnggotaController::class, 'exportPdf'])->name('anggota.exportPdf');
+Route::get('/rekap-presensi/export-pdf', [RekapPresensiController::class, 'export'])->name('rekap-presensi.export');
+Route::get('/export-keuangan', [KeuanganController::class, 'exportPdf'])->name('keuangan.export.pdf');
 

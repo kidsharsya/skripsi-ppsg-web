@@ -21,8 +21,14 @@ class Anggota extends Model
 
     public function catatanIuran(): BelongsToMany
     {
-    return $this->belongsToMany(CatatanIuran::class, 'anggota_catatan_iuran')->withTimestamps();
+    return $this->belongsToMany(CatatanIuran::class, 'anggota_catatan_iuran')->withPivot('status_bayar')->withTimestamps();
     }
+
+    public function presensis()
+    {
+    return $this->hasMany(Presensi::class);
+    }
+
 
 
 

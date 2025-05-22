@@ -15,7 +15,7 @@ class CatatanIuran extends Model
 
     public function anggota(): BelongsToMany
     {
-        return $this->belongsToMany(Anggota::class)->withTimestamps();
+        return $this->belongsToMany(Anggota::class)->withPivot('status_bayar')->withTimestamps();
     }
 
     public function user(): BelongsTo

@@ -17,10 +17,9 @@ class ArsipResource extends Resource
 {
     protected static ?string $model = Arsip::class;
 
-    protected static ?string $navigationLabel = 'Arsip Program Kerja';
-    protected static ?string $navigationGroup = 'Manajemen Arsip';
+    protected static ?string $navigationLabel = 'Manajemen Arsip Program Kerja';
     protected static ?string $navigationIcon = 'heroicon-o-folder';
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 7;
 
     public static function form(Form $form): Form
     {

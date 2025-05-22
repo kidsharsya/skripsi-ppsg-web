@@ -2,24 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AcaraResource\Pages;
-use App\Filament\Resources\AcaraResource\RelationManagers;
-use App\Models\Acara;
-use Illuminate\Support\Str;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Acara;
+use Filament\Forms\Form;
+use Pages\RekapPresensi;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\AcaraResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\AcaraResource\RelationManagers;
 
 class AcaraResource extends Resource
 {
     protected static ?string $model = Acara::class;
-    protected static ?string $navigationGroup = 'Manajemen Presensi Kegiatan';
     protected static ?int $navigationSort = 4;
-    protected static ?string $navigationLabel = 'Presensi Kegiatan';
+    protected static ?string $navigationLabel = 'Manajemen Presensi';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -67,33 +67,43 @@ class AcaraResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama')
-                    ->label('Nama')
-                    ->sortable(),
+                    ->label('Nama Acara')
+                    ->sortable()
+                    ->searchable(),
 
                 Tables\Columns\TextColumn::make('deskripsi')
                     ->label('Deskripsi'),
                 
                 Tables\Columns\TextColumn::make('waktu_mulai')
                     ->label('Waktu Mulai')
-                    ->sortable(),
+                    ->sortable()
+                    ->formatStateUsing(fn ($state) => \Carbon\Carbon::parse($state)
+                        ->locale('id')
+                        ->translatedFormat('d F Y H:i:s')),
                     
                 Tables\Columns\TextColumn::make('waktu_selesai')
-                    ->label('Waktu Selesai'),
+                    ->label('Waktu Selesai')
+                    ->formatStateUsing(fn ($state) => \Carbon\Carbon::parse($state)
+                        ->locale('id')
+                        ->translatedFormat('d F Y H:i:s')),
 
                 Tables\Columns\TextColumn::make('token')
                     ->label('Token'),
                 
                 Tables\Columns\TextColumn::make('latitude')
-                    ->label('Latitude'),
+                    ->label('Latitude')
+                    ->toggleable(),
                 
                 Tables\Columns\TextColumn::make('longitude')
-                    ->label('Longitude'),
+                    ->label('Longitude')
+                    ->toggleable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -115,6 +125,7 @@ class AcaraResource extends Resource
             'index' => Pages\ListAcaras::route('/'),
             'create' => Pages\CreateAcara::route('/create'),
             'edit' => Pages\EditAcara::route('/{record}/edit'),
+            'rekap' => Pages\RekapPresensi::route('/rekap-presensi'),
         ];
     }
 }

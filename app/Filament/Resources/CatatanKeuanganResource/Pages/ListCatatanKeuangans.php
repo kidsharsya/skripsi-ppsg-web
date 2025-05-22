@@ -30,6 +30,10 @@ class ListCatatanKeuangans extends ListRecords
             Actions\Action::make('Keuangan Per Bulan') // Menggunakan Actions\Action
                 ->url(route('filament.admin.resources.catatan-keuangans.laporanperiode')) 
                 ->icon('heroicon-o-book-open'),
+            Actions\Action::make('Export PDF')
+            ->label('Export PDF')
+            ->icon('heroicon-o-arrow-down-tray')
+            ->url(route('keuangan.export.pdf')),
         ];
     }
 

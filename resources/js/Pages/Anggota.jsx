@@ -76,15 +76,18 @@ export default function Anggota() {
                                     {anggota.no_hp}
                                 </td>
                                 <td className="border px-4 py-2 text-center">
+                                    {/* Perbaikan untuk tampilan mobile dengan menyesuaikan ukuran dan padding */}
                                     <span
-                                        className={`px-10 py-1.5 rounded-lg text-sm font-semibold
-            ${
-                anggota.status_keanggotaan === "aktif"
-                    ? "bg-green-100 text-green-800"
-                    : anggota.status_keanggotaan === "pasif"
-                    ? "bg-yellow-100 text-yellow-800"
-                    : "bg-red-100 text-red-800"
-            }`}
+                                        className={`inline-block w-full md:w-auto px-2 py-1 rounded-md text-xs md:text-sm font-medium
+                                        ${
+                                            anggota.status_keanggotaan ===
+                                            "aktif"
+                                                ? "bg-green-100 text-green-800"
+                                                : anggota.status_keanggotaan ===
+                                                  "pasif"
+                                                ? "bg-yellow-100 text-yellow-800"
+                                                : "bg-red-100 text-red-800"
+                                        }`}
                                     >
                                         {anggota.status_keanggotaan
                                             .charAt(0)
