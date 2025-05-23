@@ -5,23 +5,10 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Anggota;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Auth;
 
 class AnggotaController extends Controller
 {
-    public function exportPdf()
-    {
-        $anggotas = Anggota::all();
-
-        // Load view yang akan dijadikan PDF
-        $pdf = PDF::loadView('anggota', compact('anggotas'))
-        ->setPaper('A4', 'landscape');
-        
-        // Download file PDF
-        return $pdf->download('data_anggota.pdf');
-    }
-
     public function index()
     {
         $anggotas = Anggota::all(); // Mengambil semua data anggota

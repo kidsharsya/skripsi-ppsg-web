@@ -9,7 +9,9 @@ use App\Models\Anggota;
 use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\Action;
 use Illuminate\Support\Str;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AnggotaResource\Pages;
@@ -210,9 +212,20 @@ class AnggotaResource extends Resource
             ])
             ->headerActions([
                 Tables\Actions\Action::make('Export pdf')
-                    ->url(route('anggota.exportPdf'))
+                    ->label('Export PDF')
                     ->icon('heroicon-o-document-arrow-down')
-                    ->openUrlInNewTab(true),
+                    ->action(function () {
+                            $anggotas = \App\Models\Anggota::all();
+
+                            $pdf = Pdf::loadView('anggota', [
+                            'anggotas' => $anggotas,
+                            ])->setPaper('A4', 'landscape');
+
+            return response()->streamDownload(
+                fn () => print($pdf->stream()),
+                'data_anggota.pdf'
+                    );
+                }),
             ]);
     }
 

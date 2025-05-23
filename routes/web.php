@@ -60,7 +60,6 @@ Route::middleware('auth')->group(function (){
     Route::put('/profile', [AnggotaController::class, 'updateProfil'])->name('profile.update');
 }); #Ini route middleware untuk halaman pengguna
 
-Route::get('/export-pdf', [AnggotaController::class, 'exportPdf'])->name('anggota.exportPdf');
 Route::get('/rekap-presensi/export-pdf', [RekapPresensiController::class, 'export'])->name('rekap-presensi.export');
 Route::get('/export-keuangan', [KeuanganController::class, 'exportPdf'])->name('keuangan.export.pdf');
 
