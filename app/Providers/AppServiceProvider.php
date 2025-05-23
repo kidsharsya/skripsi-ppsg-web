@@ -30,8 +30,8 @@ class AppServiceProvider extends ServiceProvider
             },
         ]);
 
-        if (app()->environment('local')) {
-        \Illuminate\Support\Facades\URL::forceScheme('https');
-    }
+    //     if (app()->environment('local')) {
+    //     \Illuminate\Support\Facades\URL::forceScheme('https');
+    // }
     }
 }

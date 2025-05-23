@@ -16,7 +16,7 @@ export default defineConfig({
         port: 5173, // default Vite port, sesuaikan jika kamu ubah
         hmr: {
             protocol: "wss",
-            host: "bba8-103-19-180-14.ngrok-free.app", // atau IP kamu, tergantung kondisi
+            host: "localhost", // atau IP kamu, tergantung kondisi
             clientPort: 443,
         },
     },
