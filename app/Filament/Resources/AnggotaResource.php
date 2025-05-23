@@ -6,14 +6,15 @@ use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
 use App\Models\Anggota;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\AnggotaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\AnggotaResource\RelationManagers;
-use Illuminate\Support\Str;
 
 class AnggotaResource extends Resource
 {
@@ -36,7 +37,7 @@ class AnggotaResource extends Resource
                             ->whereDoesntHave('anggota')
                             ->pluck('email', 'id');
                     })
-                    ->disabled(fn () => false),
+                    ->disabled(fn (Get $get, $state, $context) => $context === 'edit'),
 
                 Forms\Components\TextInput::make('nama')
                     ->required()
