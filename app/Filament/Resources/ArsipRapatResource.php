@@ -39,6 +39,7 @@ class ArsipRapatResource extends Resource
                 ->columnSpan(2),
                 Forms\Components\FileUpload::make('dokumentasi')
                 ->label('Foto Dokumentasi')
+                ->disk('public')
                 ->nullable(),
             ]);
     }
