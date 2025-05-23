@@ -40,7 +40,7 @@ class ArsipRapatResource extends Resource
                 Forms\Components\FileUpload::make('dokumentasi_url')
                 ->label('Foto Dokumentasi')
                 ->image()
-                ->disk('s3')
+                ->disk('public')
                 ->directory('dokumentasi_rapat')
                 ->nullable(),
             ]);
