@@ -29,7 +29,7 @@ export default function ArsipRapatDetail() {
                             Dokumentasi
                         </h2>
                         <img
-                            src={arsip.dokumentasi_url}
+                            src={arsip.dokumentasi}
                             alt="Dokumentasi Rapat"
                             className="rounded-lg shadow-md max-w-full h-auto"
                         />
