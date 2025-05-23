@@ -11,15 +11,15 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    server: {
-        host: true, // agar bisa diakses dari device lain
-        port: 5173, // default Vite port, sesuaikan jika kamu ubah
-        hmr: {
-            protocol: "wss",
-            host: "localhost", // atau IP kamu, tergantung kondisi
-            clientPort: 443,
-        },
-    },
+    // server: {
+    //     host: true, // agar bisa diakses dari device lain
+    //     port: 5173, // default Vite port, sesuaikan jika kamu ubah
+    //     hmr: {
+    //         protocol: "wss",
+    //         host: "localhost", // atau IP kamu, tergantung kondisi
+    //         clientPort: 443,
+    //     },
+    // },
     css: {
         postcss: {
             plugins: [tailwindcss()],

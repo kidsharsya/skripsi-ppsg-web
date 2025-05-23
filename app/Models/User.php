@@ -87,4 +87,10 @@ class User extends Authenticatable
     //     return $this->role === 'admin';
     // }
 
+    // public function canAccessPanel(\Filament\Panel $panel): bool
+    // {
+    //     // Hanya user dengan role admin yang boleh masuk /admin
+    //     return $this->role === 'admin';
+    // }
+
 }
