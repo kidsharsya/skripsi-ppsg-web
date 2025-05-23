@@ -36,7 +36,7 @@ class AnggotaResource extends Resource
                             ->whereDoesntHave('anggota')
                             ->pluck('email', 'id');
                     })
-                    ->disabled(fn ($state) => $state ? true : false),
+                    ->disabled(fn () => false),
 
                 Forms\Components\TextInput::make('nama')
                     ->required()
