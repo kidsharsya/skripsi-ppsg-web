@@ -29,7 +29,7 @@ class ArsipRapatController extends Controller
                 'judul_rapat' => $arsip->judul_rapat,
                 'tanggal_rapat' => $arsip->tanggal_rapat,
                 'notulensi' => $arsip->notulensi,
-                'dokumentasi' => $arsip->dokumentasi_url,
+                'dokumentasi_url' => $arsip->dokumentasi ? asset('storage/' . $arsip->dokumentasi) : null,
             ]
         ]);
     }

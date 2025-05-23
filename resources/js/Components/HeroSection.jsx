@@ -10,7 +10,7 @@ const HeroSection = ({ homeContent }) => {
                         className="absolute inset-0 bg-center bg-cover"
                         style={{
                             backgroundImage: homeContent.banner_image
-                                ? `url(${homeContent.banner_image})`
+                                ? `url(/storage/${homeContent.banner_image})`
                                 : "url('/api/placeholder/1200/400')",
                         }}
                     ></div>
