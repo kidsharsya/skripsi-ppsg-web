@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Filament\Panel;
+use Filament\Models\Contracts\FilamentUser;
 
 class User extends Authenticatable
 {
@@ -44,26 +46,18 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function canAccessPanel(\Filament\Panel $panel): bool
+    // public function canAccessPanel(\Filament\Panel $panel): bool
+    // {
+    // if ($panel->getId() === 'admin') {
+    //     return $this->role === 'admin';
+    // }
+    
+    // return true;
+    // }
+
+    public function canAccessPanel(Panel $panel): bool
     {
-        Log::info('canAccessPanel Method Called', [
-            'panel_id' => $panel->getId(),
-            'user_id' => $this->id,
-            'user_email' => $this->email,
-            'user_role' => $this->role,
-            'required_panel' => 'admin',
-        ]);
-
-        if ($panel->getId() === 'admin') {
-            $canAccess = $this->role === 'admin';
-            Log::info('Admin Panel Access Check', [
-                'user_role' => $this->role,
-                'can_access' => $canAccess,
-            ]);
-            return $canAccess;
-        }
-
-        return true;
+        return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
     }
 
 
