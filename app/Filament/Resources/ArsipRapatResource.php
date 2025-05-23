@@ -63,7 +63,7 @@ class ArsipRapatResource extends Resource
                 ->limit(300)
                 ->wrap(),
 
-                Tables\Columns\ImageColumn::make('dokumentasi_url')
+                Tables\Columns\ImageColumn::make('dokumentasi')
                 ->label('Foto Dokumentasi')
                 ->size(100),
             ])
