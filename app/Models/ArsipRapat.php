@@ -18,6 +18,6 @@ class ArsipRapat extends Model
 
     public function getDokumentasiUrlAttribute()
     {
-        return $this->dokumentasi ? asset('storage/' . $this->dokumentasi) : null;
+        return $this->dokumentasi ? Storage::disk('public')->url($this->dokumentasi) : null;
     }
 }
