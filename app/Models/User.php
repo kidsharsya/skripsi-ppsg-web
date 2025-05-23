@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'=> 'admin','user',
+        'role',
     ];
 
     /**
@@ -43,6 +43,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function canAccessPanel(\Filament\Panel $panel): bool
+    {
+    if ($panel->getId() === 'admin') {
+        return $this->role === 'admin';
+    }
+    
+    return true;
+    }
+
 
     // Fungsi untuk memeriksa apakah pengguna adalah admin
     // public function isAdmin()
