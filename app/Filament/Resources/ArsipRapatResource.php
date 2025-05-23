@@ -37,7 +37,7 @@ class ArsipRapatResource extends Resource
                 ->label('Notulensi Rapat')
                 ->required()
                 ->columnSpan(2),
-                Forms\Components\FileUpload::make('dokumentasi_url')
+                Forms\Components\FileUpload::make('dokumentasi')
                 ->label('Foto Dokumentasi')
                 ->image()
                 ->disk('public')
