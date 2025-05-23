@@ -92,12 +92,12 @@ class User extends Authenticatable implements FilamentUser
 
     public function catatan_keuangan()
     {
-        return $this->hasOne(LaporanKeuangan::class);
+        return $this->hasMany(LaporanKeuangan::class);
     }
 
     public function catatan_iuran()
     {
-        return $this->hasOne(CatatanIuran::class, 'anggota_catatan_iuran');
+        return $this->hasMany(CatatanIuran::class, 'anggota_catatan_iuran');
     }
 
     // public function canAccessPanel(Panel $panel): bool
