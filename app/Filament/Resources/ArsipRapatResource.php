@@ -37,10 +37,10 @@ class ArsipRapatResource extends Resource
                 ->label('Notulensi Rapat')
                 ->required()
                 ->columnSpan(2),
-                Forms\Components\FileUpload::make('dokumentasi')
+                Forms\Components\FileUpload::make('dokumentasi_url')
                 ->label('Foto Dokumentasi')
                 ->image()
-                ->disk('public')
+                ->disk('s3')
                 ->directory('dokumentasi_rapat')
                 ->nullable(),
             ]);
@@ -63,7 +63,7 @@ class ArsipRapatResource extends Resource
                 ->limit(300)
                 ->wrap(),
 
-                Tables\Columns\ImageColumn::make('dokumentasi')
+                Tables\Columns\ImageColumn::make('dokumentasi_url')
                 ->label('Foto Dokumentasi')
                 ->size(100),
             ])
