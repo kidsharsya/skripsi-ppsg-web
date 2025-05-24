@@ -85,13 +85,13 @@ const Footer = () => {
                                 Presensi
                             </Link>
                             <Link
-                                href="/arsip/rapat"
+                                href="/arsip-rapat"
                                 className="block text-gray-300 hover:text-white"
                             >
                                 Arsip Rapat
                             </Link>
                             <Link
-                                href="/arsip/program-kerja"
+                                href="/arsip-program-kerja"
                                 className="block text-gray-300 hover:text-white"
                             >
                                 Program Kerja
