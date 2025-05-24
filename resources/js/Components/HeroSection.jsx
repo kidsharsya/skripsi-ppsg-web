@@ -9,8 +9,8 @@ const HeroSection = ({ homeContent }) => {
                     <div
                         className="absolute inset-0 bg-center bg-cover"
                         style={{
-                            backgroundImage: homeContent.banner_image
-                                ? `url(/storage/${homeContent.banner_image})`
+                            backgroundImage: homeContent.banner_image_url
+                                ? `url(${homeContent.banner_image_url})`
                                 : "url('/api/placeholder/1200/400')",
                         }}
                     ></div>

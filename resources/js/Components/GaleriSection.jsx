@@ -37,7 +37,7 @@ const GaleriSection = ({ homeContent, galeri }) => {
                         >
                             <div className="aspect-w-16 aspect-h-12 h-64 md:h-72 w-full">
                                 <img
-                                    src={`/storage/${item.image}`}
+                                    src={item.image_url}
                                     alt={`Dokumentasi ${item.judul}`}
                                     className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                                 />

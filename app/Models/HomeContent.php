@@ -29,7 +29,7 @@ class HomeContent extends Model
         'misi' => 'array',
     ];
 
-    public function getBannerImageAttribute()
+    public function getBannerImageUrlAttribute()
     {
     return $this->banner_image
         ? Storage::disk('public')->url($this->banner_image)

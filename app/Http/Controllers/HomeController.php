@@ -19,11 +19,7 @@ class HomeController extends Controller
         // Mengambil data HomeContent (hanya akan ada 1 record berdasarkan implementasi canCreate())
         $homeContent = HomeContent::first() ?? new HomeContent();
         
-        // Jika banner_image tidak null, pastikan URL lengkap disediakan
-        if ($homeContent->banner_image) {
-            // Tidak perlu menambahkan '/storage/' karena itu sudah ditangani di frontend
-            $homeContent->banner_image = $homeContent->banner_image;
-        }
+        $homeContent->banner_image_url = $homeContent->banner_image_url;
 
         $stats = [
             'anggotaAktif' => Anggota::where('status_keanggotaan', 'aktif')->count(),
@@ -35,7 +31,11 @@ class HomeController extends Controller
         // Ambil data pengurus
         $pengurus = Pengurus::all();
         // Ambil data galeri dokumentasi
-        $galeri = Galeri::all();
+        $galeri = Galeri::all()->map(function ($item) {
+            $item->image_url = $item->image_url;
+            return $item;
+        });
+
         
 
         // Render halaman Home dengan data yang diperlukan
