@@ -97,7 +97,7 @@ const GaleriSection = ({ homeContent, galeri }) => {
                         >
                             <div className="relative aspect-w-16 aspect-h-9">
                                 <img
-                                    src={`/storage/${selectedImage.image}`}
+                                    src={`${selectedImage.image_url}`}
                                     alt={selectedImage.judul}
                                     className="w-full h-full object-contain"
                                 />
