@@ -12,6 +12,21 @@ import {
 } from "lucide-react";
 
 export default function Profile({ anggota }) {
+    if (!anggota) {
+        return (
+            <MainLayout>
+                <div className="max-w-2xl mx-auto lg:mt-10 text-center bg-white p-8 rounded-xl shadow-lg">
+                    <h1 className="text-2xl font-bold text-gray-800 mb-4">
+                        Data Anggota Belum Tersedia
+                    </h1>
+                    <p className="text-gray-600 mb-6">
+                        Akun Anda belum memiliki data anggota. Silakan hubungi
+                        pengurus untuk melengkapi informasi profil Anda.
+                    </p>
+                </div>
+            </MainLayout>
+        );
+    }
     // Function untuk mengubah status keanggotaan menjadi properti warna yang sesuai
     const getStatusColors = (status) => {
         switch (status?.toLowerCase()) {
