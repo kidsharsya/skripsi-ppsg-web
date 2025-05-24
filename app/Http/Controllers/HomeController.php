@@ -29,7 +29,11 @@ class HomeController extends Controller
         ];
 
         // Ambil data pengurus
-        $pengurus = Pengurus::all();
+        $pengurus = Pengurus::all()->map(function ($item) {
+            $item->foto_url = $item->foto_url;
+            return $item;
+        });
+        
         // Ambil data galeri dokumentasi
         $galeri = Galeri::all()->map(function ($item) {
             $item->image_url = $item->image_url;

@@ -53,8 +53,8 @@ const PengurusSection = ({ homeContent, pengurus }) => {
                                 <div className="mb-4">
                                     <img
                                         src={
-                                            pengurus.foto
-                                                ? `/storage/${pengurus.foto}`
+                                            pengurus.foto_url
+                                                ? `${pengurus.foto_url}`
                                                 : "/images/default-profile.png"
                                         }
                                         alt={pengurus.nama}
