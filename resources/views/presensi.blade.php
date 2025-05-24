@@ -71,6 +71,7 @@
                 <th class="no">No</th>
                 <th>Nama Anggota</th>
                 <th>Status Kehadiran</th>
+                <th>Alasan (Izin)</th>
             </tr>
         </thead>
         <tbody>
@@ -90,6 +91,7 @@
                         @endphp
                         <span class="badge {{ $badgeClass }}">{{ $status }}</span>
                     </td>
+                    <td>{{ $presensi->alasan }}</td>
                 </tr>
             @endforeach
         </tbody>

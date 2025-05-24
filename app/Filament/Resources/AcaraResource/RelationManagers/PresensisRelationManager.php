@@ -48,6 +48,8 @@ class PresensisRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->formatStateUsing(fn ($state) => Str::ucfirst($state)),
+                Tables\Columns\TextColumn::make('alasan')
+                    ->label('Alasan (Jika Izin)'),
             ])
             ->filters([
                 //
