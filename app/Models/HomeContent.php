@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class HomeContent extends Model
 {
@@ -27,4 +28,12 @@ class HomeContent extends Model
     protected $casts = [
         'misi' => 'array',
     ];
+
+    public function getBannerImageAttribute()
+    {
+    return $this->banner_image
+        ? Storage::disk('public')->url($this->banner_image)
+        : null;
+    }
+
 }

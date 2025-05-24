@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Galeri extends Model
 {
@@ -14,4 +15,12 @@ class Galeri extends Model
         'image',
         'is_active',
     ]; 
+
+    public function getImageUrlAttribute()
+    {
+        return $this->image
+            ? Storage::disk('public')->url($this->image)
+            : null;
+    }
+
 }
