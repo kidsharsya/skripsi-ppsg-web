@@ -4,7 +4,7 @@ const HeroSection = ({ homeContent }) => {
     return (
         <>
             {/* Hero Section */}
-            <section className="text-white py-24 text-center relative overflow-hidden">
+            <section className="text-white lg:py-40 py-24 text-center relative overflow-hidden">
                 <div className="absolute inset-0">
                     <div
                         className="absolute inset-0 bg-center bg-cover"
