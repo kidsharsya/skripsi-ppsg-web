@@ -32,6 +32,7 @@ class AnggotaResource extends Resource
             ->schema([
                 Forms\Components\Select::make('user_id')
                     ->required()
+                    ->reactive()
                     ->relationship('user', 'email')
                     ->label('User ID')
                     ->options(function () {
@@ -39,15 +40,22 @@ class AnggotaResource extends Resource
                             ->whereDoesntHave('anggota')
                             ->pluck('email', 'id');
                     })
+                    ->afterStateUpdated(function ($state, callable $set){
+                        $user = User::find($state);
+                        if($user){
+                            $set('nama', $user->name);
+                        }
+                    })
                     ->disabled(fn (Get $get, $state, $context) => $context === 'edit'),
 
                 Forms\Components\TextInput::make('nama')
                     ->required()
-                    ->label('Nama'),
+                    ->label('Nama Lengkap'),
 
                 Forms\Components\TextInput::make('tempat_tgl_lahir')
                     ->required()
-                    ->label('Tempat, Tanggal Lahir'),
+                    ->label('Tempat, Tanggal Lahir')
+                    ->placeholder('Contoh: Sleman, 17 April 2001'),
 
                 Forms\Components\Select::make('jenis_kelamin')
                     ->required()

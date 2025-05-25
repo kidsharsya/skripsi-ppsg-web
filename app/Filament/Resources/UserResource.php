@@ -36,7 +36,16 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                 ->password()
                 ->required()
+                ->revealable()
                 ->minLength(8),
+
+                Forms\Components\TextInput::make('password_konfirmasi')
+                ->password()
+                ->label('Konfirmasi Password')
+                ->required()
+                ->revealable()
+                ->same('password')
+                ->dehydrated(false),
 
                 Forms\Components\Select::make('role')
                     ->required()

@@ -53,11 +53,13 @@ class AcaraResource extends Resource
                 Forms\Components\TextInput::make('latitude')
                 ->required()
                 ->numeric()
+                ->placeholder('Contoh: -7.87231')
                 ->label('Latitude Lokasi'),
 
                 Forms\Components\TextInput::make('longitude')
                 ->required()
                 ->numeric()
+                ->placeholder('Contoh: 110.87621')
                 ->label('Longitude Lokasi'),
             ]);
     }

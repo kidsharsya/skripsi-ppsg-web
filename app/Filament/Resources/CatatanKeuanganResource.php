@@ -37,6 +37,7 @@ class CatatanKeuanganResource extends Resource
 
                 Forms\Components\TextInput::make('masuk')
                     ->numeric()
+                    ->prefix('Rp')
                     ->label('Uang Masuk')
                     ->formatStateUsing(fn ($state) => $state !== null ? (int) $state : null)
                     ->reactive()
@@ -45,6 +46,7 @@ class CatatanKeuanganResource extends Resource
 
                 Forms\Components\TextInput::make('keluar')
                     ->numeric()
+                    ->prefix('Rp')
                     ->label('Uang Keluar')
                     ->formatStateUsing(fn ($state) => $state !== null ? (int) $state : null)
                     ->reactive()

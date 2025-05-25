@@ -33,6 +33,8 @@ class CreateUangKeluar extends CreateRecord
 
                 Forms\Components\TextInput::make('keluar')
                     ->numeric()
+                    ->prefix('Rp')
+                    ->placeholder('Masukkan tanpa titik. Contoh: 50000 (lima puluh ribu)')
                     ->required()
                     ->label('Uang Keluar'),
 

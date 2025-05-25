@@ -33,6 +33,8 @@ class CreateUangMasuk extends CreateRecord
 
                 Forms\Components\TextInput::make('masuk')
                     ->numeric()
+                    ->prefix('Rp')
+                    ->placeholder('Masukkan tanpa titik. Contoh: 50000 (lima puluh ribu)')
                     ->required()
                     ->label('Uang Masuk'),
 
