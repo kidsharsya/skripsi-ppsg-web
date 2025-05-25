@@ -20,6 +20,6 @@ class ListCatatanIurans extends ListRecords
 
     public function getTitle(): string
     {
-        return 'Catatan Iuran/Kas Anggota';
+        return 'Catatan Iuran Kas Anggota';
     }
 }
