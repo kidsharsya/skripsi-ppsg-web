@@ -17,12 +17,8 @@ export default function Anggota() {
             {/* Statistik Jumlah Anggota */}
             <div className="w-full mb-12">
                 <div className="bg-white shadow-lg rounded-2xl p-6">
-                    <h2 className="text-center font-bold text-xl text-blue-900 mb-6">
-                        Statistik Anggota PPSG Candisingo
-                    </h2>
-
                     {/* Jumlah Per RT */}
-                    <h3 className="text-center font-semibold text-lg text-blue-900 mb-4">
+                    <h3 className="text-center font-bold text-lg text-blue-900 mb-4">
                         Jumlah Anggota Per RT
                     </h3>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
@@ -42,7 +38,7 @@ export default function Anggota() {
                     </div>
 
                     {/* Jumlah Gender */}
-                    <h3 className="text-center font-semibold text-lg text-blue-900 mt-8 mb-4">
+                    <h3 className="text-center font-bold text-lg text-blue-900 mt-8 mb-4">
                         Jumlah Berdasarkan Gender
                     </h3>
                     <div className="grid grid-cols-2 gap-4 max-w-md mx-auto mb-4">
