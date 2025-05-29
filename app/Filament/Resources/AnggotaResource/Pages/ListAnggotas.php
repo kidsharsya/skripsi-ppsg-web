@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\AnggotaResource\Pages;
 
-use App\Filament\Resources\AnggotaResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\AnggotaResource;
+use App\Filament\Resources\AnggotaResource\Widgets\StatistikAnggota;
 
 class ListAnggotas extends ListRecords
 {
@@ -20,6 +21,13 @@ class ListAnggotas extends ListRecords
         return [
             Actions\CreateAction::make()
             ->label('Tambah Anggota'),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            StatistikAnggota::class,
         ];
     }
 }

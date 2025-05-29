@@ -12,8 +12,17 @@ class AnggotaController extends Controller
     public function index()
     {
         $anggotas = Anggota::all(); // Mengambil semua data anggota
+
+        // Hitung jumlah berdasarkan RT
+        $jumlahRt = Anggota::selectRaw('rt, COUNT(*) as total')->groupBy('rt')->pluck('total', 'rt');
+
+        // Hitung jumlah berdasarkan jenis kelamin
+        $jumlahGender = Anggota::selectRaw('jenis_kelamin, COUNT(*) as total')->groupBy('jenis_kelamin')->pluck('total', 'jenis_kelamin');
+
         return Inertia::render('Anggota', [
-            'anggotas' => $anggotas, // Mengirim data ke frontend
+            'anggotas' => $anggotas,
+            'jumlahRt' => $jumlahRt,
+            'jumlahGender' => $jumlahGender,
         ]);
     }
 

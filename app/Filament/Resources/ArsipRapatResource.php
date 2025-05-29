@@ -86,7 +86,7 @@ class ArsipRapatResource extends Resource
 
                 return response()->streamDownload(
                 fn () => print($pdf->stream()),
-                    'Notulensi-' . $record->judul_rapat . '-' . Carbon::parse($record->tanggal_rapat)->locale('id')->translatedFormat('d-M-Y') . '.pdf'
+                    'Notulensi ' . $record->judul_rapat . ' ' . Carbon::parse($record->tanggal_rapat)->locale('id')->translatedFormat('d M Y') . '.pdf'
                     );
                 }),
             ])
