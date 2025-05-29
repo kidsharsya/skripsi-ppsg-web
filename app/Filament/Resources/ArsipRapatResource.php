@@ -2,12 +2,15 @@
 
 namespace App\Filament\Resources;
 
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
 use App\Models\ArsipRapat;
 use Filament\Tables\Table;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Illuminate\Support\Facades\Storage;
 use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Database\Eloquent\Builder;
@@ -72,6 +75,20 @@ class ArsipRapatResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+
+                Action::make('export_pdf')
+                ->label('Export PDF')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->action(function ($record) {
+                    $pdf = Pdf::loadView('arsip-rapat', [
+                    'arsip' => $record,
+                ]);
+
+                return response()->streamDownload(
+                fn () => print($pdf->stream()),
+                    'Notulensi-' . $record->judul_rapat . '-' . Carbon::parse($record->tanggal_rapat)->translatedFormat('d-M-Y') . '.pdf'
+                    );
+                }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -54,7 +54,7 @@ class PresensiController extends Controller
             $request->longitude
         );
 
-        if ($distance > 0.1) {
+        if ($distance > 0.02) {
             return back()->withErrors(['message' => 'Tidak dapat presensi! Kamu berada di luar area lokasi acara']);
         }
 
