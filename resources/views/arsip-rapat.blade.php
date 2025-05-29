@@ -22,7 +22,7 @@
 
     <div class="section">
         <strong>Tanggal:</strong><br>
-        {{ \Carbon\Carbon::parse($arsip->tanggal_rapat)->translatedFormat('d F Y') }}
+        {{ \Carbon\Carbon::parse($arsip->tanggal_rapat)->locale('id')->translatedFormat('d F Y') }}
     </div>
 
     <div class="section">
