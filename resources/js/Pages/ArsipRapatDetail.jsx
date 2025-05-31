@@ -1,9 +1,23 @@
 import React from "react";
 import { usePage, Link } from "@inertiajs/react";
 import MainLayout from "../Layouts/MainLayout";
+import { marked } from "marked";
+import DOMPurify from "dompurify";
 
 export default function ArsipRapatDetail() {
     const { arsip } = usePage().props;
+
+    // Configure marked options
+    marked.setOptions({
+        breaks: true,
+        gfm: true,
+    });
+
+    // Convert markdown to HTML and sanitize it
+    const getMarkdownHTML = (markdown) => {
+        const rawHTML = marked.parse(markdown);
+        return DOMPurify.sanitize(rawHTML);
+    };
 
     return (
         <MainLayout>
@@ -19,9 +33,12 @@ export default function ArsipRapatDetail() {
                 </p>
                 <div className="mb-4">
                     <h2 className="text-lg font-semibold mb-2">Notulensi</h2>
-                    <p className="bg-gray-100 p-4 rounded-md whitespace-pre-line">
-                        {arsip.notulensi}
-                    </p>
+                    <div
+                        className="bg-gray-100 p-4 rounded-md prose prose-sm max-w-none markdown-content"
+                        dangerouslySetInnerHTML={{
+                            __html: getMarkdownHTML(arsip.notulensi),
+                        }}
+                    />
                 </div>
                 {arsip.dokumentasi && (
                     <div>
