@@ -58,12 +58,9 @@ class ArsipRapatResource extends Resource
                 ->sortable()
                 ->formatStateUsing(fn ($state) => \Carbon\Carbon::parse($state)->locale('id')->translatedFormat('d F Y')),
 
-                Tables\Columns\TextColumn::make('notulensi')
+                Tables\Columns\ViewColumn::make('notulensi')
                 ->label('Notulensi')
-                ->html() // Menandakan bahwa konten adalah HTML
-                ->formatStateUsing(fn ($state) => \Illuminate\Support\Str::markdown($state))
-                ->limit(300)
-                ->wrap(),
+                ->view('filament.resources.tables.columns.markdown-column'),
 
                 Tables\Columns\ImageColumn::make('dokumentasi')
                 ->label('Foto Dokumentasi')
