@@ -34,7 +34,7 @@ export default function ArsipRapatDetail() {
                 <div className="mb-4">
                     <h2 className="text-lg font-semibold mb-2">Notulensi</h2>
                     <div
-                        className="bg-gray-100 p-4 rounded-md prose prose-sm max-w-none markdown-content"
+                        className="bg-gray-100 p-4 rounded-md markdown-content"
                         dangerouslySetInnerHTML={{
                             __html: getMarkdownHTML(arsip.notulensi),
                         }}

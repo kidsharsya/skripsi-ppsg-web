@@ -12,3 +12,98 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.markdown-content ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.markdown-content ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.markdown-content li {
+    margin-bottom: 0.25rem;
+    display: list-item;
+}
+
+.markdown-content ul ul {
+    list-style-type: circle;
+    margin-top: 0.25rem;
+}
+
+.markdown-content ol ol {
+    list-style-type: lower-alpha;
+    margin-top: 0.25rem;
+}
+
+.markdown-content h1 {
+    @apply text-xl font-bold mb-3 text-gray-800;
+}
+
+.markdown-content h2 {
+    @apply text-lg font-semibold mb-2 text-gray-800;
+}
+
+.markdown-content h3 {
+    @apply text-base font-medium mb-2 text-gray-800;
+}
+
+.markdown-content p {
+    @apply mb-2 text-gray-700 leading-relaxed;
+}
+
+.markdown-content ul {
+    @apply list-disc list-inside mb-3 text-gray-700;
+}
+
+.markdown-content ol {
+    @apply list-decimal list-inside mb-3 text-gray-700;
+}
+
+.markdown-content li {
+    @apply mb-1;
+}
+
+.markdown-content blockquote {
+    @apply border-l-4 border-blue-500 pl-4 italic text-gray-600 mb-3;
+}
+
+.markdown-content code {
+    @apply bg-gray-200 px-1 py-0.5 rounded text-sm font-mono;
+}
+
+.markdown-content pre {
+    @apply bg-gray-200 p-2 rounded mb-3 overflow-x-auto;
+}
+
+.markdown-content pre code {
+    @apply bg-transparent p-0;
+}
+
+.markdown-content strong {
+    @apply font-semibold text-gray-800;
+}
+
+.markdown-content em {
+    @apply italic text-gray-700;
+}
+
+.markdown-content a {
+    @apply text-blue-600 hover:text-blue-800 underline;
+}
+
+.markdown-content table {
+    @apply min-w-full border-collapse border border-gray-300 mb-3;
+}
+
+.markdown-content th {
+    @apply border border-gray-300 px-2 py-1 bg-gray-100 font-semibold;
+}
+
+.markdown-content td {
+    @apply border border-gray-300 px-2 py-1;
+}
