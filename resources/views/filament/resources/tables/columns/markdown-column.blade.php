@@ -1,7 +1,8 @@
-<div style="width: 400px; max-height: 150px; overflow: hidden; word-wrap: break-word; word-break: break-word;">
+<div style="width: 400px; max-height: 120px; overflow: hidden; word-wrap: break-word; word-break: break-word;">
     <style>
         .markdown-table-content { 
             margin-top: 0.5rem !important;
+            margin-left: 0.7rem !important;
             line-height: 1.6 !important;
             display: block !important;
             white-space: normal !important;
