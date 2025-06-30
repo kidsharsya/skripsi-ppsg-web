@@ -443,7 +443,7 @@ export default function PresensiForm({ acara, error, success }) {
                             {[
                                 "Aktifkan GPS dan izinkan lokasi browser.",
                                 "Masukkan token yang valid.",
-                                "Pastikan dalam radius 100 meter dari lokasi.",
+                                "Pastikan dalam radius 20 meter dari lokasi.",
                                 "Verifikasi posisi Anda di peta.",
                             ].map((item, idx) => (
                                 <li
