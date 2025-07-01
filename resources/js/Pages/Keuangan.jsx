@@ -201,7 +201,7 @@ export default function Keuangan() {
                                                         Deskripsi
                                                     </th>
                                                     <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                                                        Uang Masuk
+                                                        Jumlah
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -267,7 +267,7 @@ export default function Keuangan() {
                                                         Deskripsi
                                                     </th>
                                                     <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                                                        Uang Keluar
+                                                        Jumlah
                                                     </th>
                                                 </tr>
                                             </thead>
