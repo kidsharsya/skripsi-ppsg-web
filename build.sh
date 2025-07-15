@@ -1,19 +1,10 @@
-#!/usr/bin/env bash
+#!/usr.bin/env bash
+# exit on error
+set -o errexit
 
-echo "🏗 Installing PHP dependencies..."
-composer install --no-dev --optimize-autoloader
-
-echo "🔑 Generating app key..."
-php artisan key:generate
-
-echo "📦 Running migrations..."
-php artisan migrate --force
-
-echo "📂 Linking storage..."
-php artisan storage:link
-
-echo "💡 Building frontend..."
+# Perintah untuk Build
+composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 npm install
 npm run build
-
-echo "✅ Done!"
+php artisan migrate --force
+php artisan storage:link
