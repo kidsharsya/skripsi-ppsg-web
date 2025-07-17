@@ -240,7 +240,7 @@ export default function Profile({ anggota }) {
                                         <option value="B">B</option>
                                         <option value="AB">AB</option>
                                         <option value="O">O</option>
-                                        <option value="Tidak Tahu">
+                                        <option value="Tidak tahu">
                                             Tidak tahu
                                         </option>
                                     </select>
