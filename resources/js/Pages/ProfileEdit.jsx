@@ -240,7 +240,9 @@ export default function Profile({ anggota }) {
                                         <option value="B">B</option>
                                         <option value="AB">AB</option>
                                         <option value="O">O</option>
-                                        <option value="O">Tidak tahu</option>
+                                        <option value="Tidak Tahu">
+                                            Tidak tahu
+                                        </option>
                                     </select>
                                     {errors.gol_darah && (
                                         <div className="text-red-500 text-sm mt-1">
