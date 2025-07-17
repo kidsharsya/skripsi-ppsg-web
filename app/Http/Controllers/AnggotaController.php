@@ -67,7 +67,7 @@ class AnggotaController extends Controller
         'jenis_kelamin' => 'nullable|string|max:10',
         'agama' => 'nullable|string|max:50',
         'rt' => 'nullable|string|max:10',
-        'gol_darah' => 'nullable|string|max:5',
+        'gol_darah' => 'nullable|string|max:15',
         'no_hp' => 'nullable|string|max:20',
     ]);
 
