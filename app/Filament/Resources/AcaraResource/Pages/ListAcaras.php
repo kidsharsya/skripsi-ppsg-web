@@ -16,7 +16,7 @@ class ListAcaras extends ListRecords
             Actions\CreateAction::make()
             ->label('Buat Presensi'),
             Actions\Action::make('Rekap Presensi')
-                ->url(route('filament.admin.resources.acaras.rekap')) // pastikan nama route-nya sesuai
+                ->url(AcaraResource::getUrl('rekap')) // pastikan nama route-nya sesuai
                 ->icon('heroicon-o-chart-bar')
                 ->color('primary'),
         ];

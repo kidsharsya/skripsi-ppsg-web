@@ -128,8 +128,8 @@ class AcaraResource extends Resource
             'index' => Pages\ListAcaras::route('/'),
             'create' => Pages\CreateAcara::route('/create'),
             'edit' => Pages\EditAcara::route('/{record}/edit'),
-            'view' => Pages\ViewAcara::route('/{record}'),
             'rekap' => Pages\RekapPresensi::route('/rekap-presensi'),
+            'view' => Pages\ViewAcara::route('/{record}'),
         ];
     }
 }
