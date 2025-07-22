@@ -104,6 +104,7 @@ class AcaraResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -127,6 +128,7 @@ class AcaraResource extends Resource
             'index' => Pages\ListAcaras::route('/'),
             'create' => Pages\CreateAcara::route('/create'),
             'edit' => Pages\EditAcara::route('/{record}/edit'),
+            'view' => Pages\ViewAcara::route('/{record}'),
             'rekap' => Pages\RekapPresensi::route('/rekap-presensi'),
         ];
     }

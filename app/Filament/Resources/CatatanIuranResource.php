@@ -34,8 +34,8 @@ class CatatanIuranResource extends Resource
                     ->disabled() // Nonaktifkan agar tidak bisa diubah secara manual
                     ->relationship('user', 'name'),
                 Forms\Components\DatePicker::make('tanggal_pertemuan')
-                ->required()
-                ->disabled(fn (Get $get, $state, $context) => $context === 'edit'),
+                ->required(),
+                // ->disabled(fn (Get $get, $state, $context) => $context === 'edit'),
                 // Select untuk memilih RT
                 Forms\Components\Select::make('rt')
                 ->label('Pilih RT')
@@ -48,7 +48,7 @@ class CatatanIuranResource extends Resource
                  $set('anggota_id', []);
                 })
                 ->required()
-                ->disabled(fn (Get $get, $state, $context) => $context === 'edit'),
+                // ->disabled(fn (Get $get, $state, $context) => $context === 'edit'),
             ]);
     }
 
@@ -104,6 +104,7 @@ class CatatanIuranResource extends Resource
                     ->default(null),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -127,6 +128,7 @@ class CatatanIuranResource extends Resource
             'index' => Pages\ListCatatanIurans::route('/'),
             'create' => Pages\CreateCatatanIuran::route('/create'),
             'edit' => Pages\EditCatatanIuran::route('/{record}/edit'),
+            'view' => Pages\ViewCatatanIuran::route('/{record}'),
         ];
     }
 }
