@@ -33,7 +33,12 @@ class PresensisRelationManager extends RelationManager
                         'Tidak Hadir' => 'Tidak Hadir',
                         'Izin' => 'Izin',
                     ])
+                    ->live()
                     ->required(),
+                Forms\Components\TextInput::make('alasan')
+                ->label('Alasan')
+                ->required(fn (Forms\Get $get): bool => $get('status') === 'Izin')
+                ->visible(fn (Forms\Get $get): bool => $get('status') === 'Izin'),
             ]);
     }
 
