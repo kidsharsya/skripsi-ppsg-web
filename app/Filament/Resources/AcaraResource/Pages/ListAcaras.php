@@ -18,7 +18,7 @@ class ListAcaras extends ListRecords
             Actions\Action::make('Rekap Presensi')
                 ->url(AcaraResource::getUrl('rekap')) // pastikan nama route-nya sesuai
                 ->icon('heroicon-o-chart-bar')
-                ->color('primary'),
+                ->color('info'),
         ];
     }
 

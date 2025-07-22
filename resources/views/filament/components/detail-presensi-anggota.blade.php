@@ -15,7 +15,7 @@
                             {{ $presensi->acara->nama }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {{ \Carbon\Carbon::parse($presensi->acara->waktu_mulai)->format('d M Y') }}
+                            {{ \Carbon\Carbon::parse($presensi->acara->waktu_mulai)->locale('id')->translatedFormat('d F Y') }}
                         </td>
                         <td class="px-6 py-4 whitespace-normal text-sm">
                             <div @class([
