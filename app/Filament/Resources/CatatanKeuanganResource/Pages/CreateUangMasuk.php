@@ -36,6 +36,11 @@ class CreateUangMasuk extends CreateRecord
                     ->prefix('Rp')
                     ->placeholder('Masukkan tanpa titik. Contoh: 50000 (lima puluh ribu)')
                     ->required()
+                    ->minValue(0)
+                    ->regex('/^[0-9]+$/')
+                    ->validationMessages([
+                        'regex' => 'Input harus berupa angka tanpa titik/koma'
+                        ])
                     ->label('Uang Masuk'),
 
                 Forms\Components\Select::make('user_id') 

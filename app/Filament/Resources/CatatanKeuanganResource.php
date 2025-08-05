@@ -41,6 +41,11 @@ class CatatanKeuanganResource extends Resource
                     ->label('Uang Masuk')
                     ->formatStateUsing(fn ($state) => $state !== null ? (int) $state : null)
                     ->reactive()
+                    ->minValue(0)
+                    ->regex('/^[0-9]+$/')
+                    ->validationMessages([
+                        'regex' => 'Input harus berupa angka tanpa titik/koma'
+                        ])
                     ->afterStateUpdated(fn (callable $set) => $set('keluar', null))
                     ->hidden(fn (callable $get) => $get('keluar') !== null && $get('keluar') > 0),
 
@@ -50,6 +55,11 @@ class CatatanKeuanganResource extends Resource
                     ->label('Uang Keluar')
                     ->formatStateUsing(fn ($state) => $state !== null ? (int) $state : null)
                     ->reactive()
+                    ->minValue(0)
+                    ->regex('/^[0-9]+$/')
+                    ->validationMessages([
+                        'regex' => 'Input harus berupa angka tanpa titik/koma'
+                        ])
                     ->afterStateUpdated(fn (callable $set) => $set('masuk', null))
                     ->hidden(fn (callable $get) => $get('masuk') !== null && $get('masuk') > 0),
 
